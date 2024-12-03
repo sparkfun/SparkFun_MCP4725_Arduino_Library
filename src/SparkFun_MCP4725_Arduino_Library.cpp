@@ -17,64 +17,62 @@
 
 #include "SparkFun_MCP4725_Arduino_Library.h"
 
-//TODO: We likely will pull in the sfe_bus toolkit which will make all the Wire calls look a bit different...
-MCP4725::MCP4725()
-{
-    Wire.begin();
+sfeTkError_t sfeMcp4725::isConnected(){
+    return _theI2CBus.ping();
 }
 
-bool MCP4725::isConnected(){
-    Wire.beginTransmission(MCP4725_ADDR);
-    return Wire.endTransmission() == 0;
-}
-
-bool MCP4725::begin()
-{
+sfeTkError_t sfeMcp4725::begin(const uint8_t address, TwoWire &wirePort) {
+    // Setup Arduino I2C bus
+    sfeTkError_t rc = _theI2CBus.init(wirePort, address, true);
+    
+    if (rc != kSTkErrOk)
+        return rc;
+    
+    // Check if device is connected
     return isConnected();
 }
 
-bool MCP4725::writeFastMode(uint16_t value, MCP4725PowerDownModes powerDownMode){
-    Wire.beginTransmission(MCP4725_ADDR);
+sfeTkError_t sfeMcp4725::writeFastMode(uint16_t value, MCP4725PowerDownModes powerDownMode){    
     /*
     In Fast mode, writes take the form (see datasheet pg. 24): 
     byte 0: C2=0 | C0=0 | PD1 | PD0 | D11 | D10 | D9 | D8
     byte 1: D7   | D6   | D5  | D4  | D3  | D2  | D1 | D0
     */
-    Wire.write ((powerDownMode << 4) | ( (value & 0x0F00) >> 8 )); // byte 0 
-    Wire.write (value & 0x00FF); // byte 1
-    return Wire.endTransmission() == 0;
+    uint8_t bytesToWrite[2];
+    bytesToWrite[0] = (powerDownMode << 4) | ( (value & 0x0F00) >> 8 );
+    bytesToWrite[1] = value & 0x00FF;
+    return _theI2CBus.writeRegion(bytesToWrite, 2);
 }
 
-bool MCP4725::writeDac(uint16_t value, MCP4725PowerDownModes powerDownMode){
-    wire.beginTransmission(MCP4725_ADDR);
+sfeTkError_t sfeMcp4725::writeDac(uint16_t value, MCP4725PowerDownModes powerDownMode){
     /*
     Dac writes take the form (see datasheet pg. 25): 
     byte 0: C2=0 | C1=1  | C0=0 | X  | X  | PD1 | PD0 | X
     byte 1: D11  | D10   | D9   | D8 | D7 | D6  | D5  | D4
     byte 2: D3   | D2    | D1   | D0 | X  | X   | X   | X
     */
-    Wire.write(0x40 | (powerDownMode << 1)) // byte 0
-    Wire.write((value & 0x0FF0 >> 4)); // byte 1
-    Wire.write((value & 0x000F) << 4); // byte 2
-    return Wire.endTransmission() == 0;
+    uint8_t bytesToWrite[3];
+    bytesToWrite[0] = (0x40 | (powerDownMode << 1));
+    bytesToWrite[1] = ( (value & 0x0FF0) >> 4 );
+    bytesToWrite[2] = ( (value & 0x000F) << 4 );
+    return _theI2CBus.writeRegion(bytesToWrite, 3);
 }
 
-bool MCP4725::writeDacEeprom(uint16_t value, MCP4725PowerDownModes powerDownMode){
-    wire.beginTransmission(MCP4725_ADDR);
+sfeTkError_t sfeMcp4725::writeDacEeprom(uint16_t value, MCP4725PowerDownModes powerDownMode){
     /*
     Dac writes take the form (see datasheet pg. 25): 
     byte 0: C2=0 | C1=1  | C0=1 | X  | X  | PD1 | PD0 | X
     byte 1: D11  | D10   | D9   | D8 | D7 | D6  | D5  | D4
     byte 2: D3   | D2    | D1   | D0 | X  | X   | X   | X
     */
-    Wire.write(0x60 | (powerDownMode << 1)) // byte 0
-    Wire.write((value & 0x0FF0 >> 4)); // byte 1
-    Wire.write((value & 0x000F) << 4); // byte 2
-    return Wire.endTransmission() == 0;
+    uint8_t bytesToWrite[3];
+    bytesToWrite[0] = (0x60 | (powerDownMode << 1));
+    bytesToWrite[1] = ( (value & 0x0FF0) >> 4 );
+    bytesToWrite[2] = ( (value & 0x000F) << 4 );
+    return _theI2CBus.writeRegion(bytesToWrite, 3);
 }
 
-bool MCP4725::readDacEeprom(MCP4725Data_t &data){
-    Wire.beginTransmission(MCP4725_ADDR);
+sfeTkError_t sfeMcp4725::readDacEeprom(MCP4725Data_t &data){
     /*
     Data Returned from Read commands take the form (see datasheet pg. 26):
     
@@ -85,17 +83,11 @@ bool MCP4725::readDacEeprom(MCP4725Data_t &data){
     byte 4 (EEPROM Reg): D7  | D6  | D5  | D4 | D3  | D2  | D1  | D0
     */
 
-    uint16_t nRead = Wire.requestFrom(MCP4725_ADDR, 5);
-    if (nRead != 5){
-        return false;
-    }
-
     uint8_t readBytes[5];
-    for (int i = 0; i < 5; i++){
-        readBytes[i] = Wire.read();
+    sfeTkError_t rc = _theI2CBus.readRegisterRegion(0, readBytes, 5);
+    if (rc != kSTkErrOk){
+        return rc;
     }
-
-    Wire.endTransmission();
 
     data.rdyFlag = (readBytes[0] & 0x80) >> 7;
     data.porFlag = (readBytes[0] & 0x40) >> 6;
@@ -104,5 +96,5 @@ bool MCP4725::readDacEeprom(MCP4725Data_t &data){
     data.eepromPowerDownMode = static_cast<MCP4725PowerDownModes>((readBytes[3] & 0x60) >> 1);
     data.eepromValue = ( (readBytes[3] & 0x0F) << 8) | readBytes[4];
 
-    return true;
+    return kSTkErrOk;
 }

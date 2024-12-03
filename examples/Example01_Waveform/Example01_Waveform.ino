@@ -104,7 +104,7 @@ void setup()
     Serial.begin(115200);
     Serial.println("MCP4725 Example 1 - Waveform"); // TODO: Update
 
-    if (myDac.begin() == false){
+    if (myDac.begin() != kSTkErrOk){
         Serial.println("Device not found. Please check wiring.");
         while(1);
     }
