@@ -42,7 +42,7 @@ class sfeMcp4725
 
         /// @brief Checks if device is connected by seeing if it acknowledges over I2C
         /// @return true if connected, false otherwise
-        bool isConnected();
+        sfeTkError_t isConnected();
 
         /// @brief Begins the device
         /// @param theBus SparkFun Toolkit bus to use for communication
@@ -53,18 +53,18 @@ class sfeMcp4725
         /// @param value 12-bit value to write to DAC register
         /// @param powerDownMode Power down mode to write to DAC register
         /// @return true if successful, false otherwise
-        bool writeFastMode(uint16_t value, MCP4725PowerDownModes powerDownMode = MCP4725_POWER_DOWN_MODE_NORMAL);
+        sfeTkError_t writeFastMode(uint16_t value, MCP4725PowerDownModes powerDownMode = MCP4725_POWER_DOWN_MODE_NORMAL);
 
         /// @brief Updates DAC register
         /// @param value 12-bit value to write to DAC register
         /// @return true if successful, false otherwise
-        bool writeDac(uint16_t value, MCP4725PowerDownModes powerDownMode = MCP4725_POWER_DOWN_MODE_NORMAL);
+        sfeTkError_t writeDac(uint16_t value, MCP4725PowerDownModes powerDownMode = MCP4725_POWER_DOWN_MODE_NORMAL);
 
         /// @brief Updates DAC register and EEPROM register
         /// @param value 12-bit value to write to DAC register
         /// @param powerDownMode Power down mode to write to DAC register
         /// @return true if successful, false otherwise
-        bool writeDacEeprom(uint16_t value, MCP4725PowerDownModes powerDownMode = MCP4725_POWER_DOWN_MODE_NORMAL);
+        sfeTkError_t writeDacEeprom(uint16_t value, MCP4725PowerDownModes powerDownMode = MCP4725_POWER_DOWN_MODE_NORMAL);
 
         /// @brief Reads DAC register and EEPROM register
         /// @param dacValue 12-bit value read from DAC register
@@ -72,7 +72,7 @@ class sfeMcp4725
         /// @param eepromValue 12-bit value read from EEPROM register
         /// @param eepromPowerDownMode Power down mode read from EEPROM register
         /// @return true if successful, false otherwise
-        bool readDacEeprom(MCP4725Data_t &data);
+        sfeTkError_t readDacEeprom(MCP4725Data_t &data);
     
     protected:
         sfeTkArdI2C _theI2CBus;
