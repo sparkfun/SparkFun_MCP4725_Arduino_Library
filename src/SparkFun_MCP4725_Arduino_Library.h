@@ -67,10 +67,7 @@ class sfeMcp4725
         sfeTkError_t writeDacEeprom(uint16_t value, MCP4725PowerDownModes powerDownMode = MCP4725_POWER_DOWN_MODE_NORMAL);
 
         /// @brief Reads DAC register and EEPROM register
-        /// @param dacValue 12-bit value read from DAC register
-        /// @param dacPowerDownMode Power down mode read from DAC register
-        /// @param eepromValue 12-bit value read from EEPROM register
-        /// @param eepromPowerDownMode Power down mode read from EEPROM register
+        /// @param data Data structure to store read data
         /// @return true if successful, false otherwise
         sfeTkError_t readDacEeprom(Mcp4725Data &data);
     
