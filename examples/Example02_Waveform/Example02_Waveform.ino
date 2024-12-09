@@ -96,26 +96,18 @@ int sintab2[512] =
   1847, 1872, 1897, 1922, 1948, 1973, 1998, 2023
 };
 
-MCP4725 myDac;
+sfeMcp4725 myDac;
 
 void setup()
 {
     // Start serial
     Serial.begin(115200);
-    Serial.println("MCP4725 Example 1 - Waveform"); // TODO: Update
+    Serial.println("MCP4725 Example 2 - Waveform");
 
     if (myDac.begin() != kSTkErrOk){
         Serial.println("Device not found. Please check wiring.");
         while(1);
     }
-
-    // Set A2 and A3 as Outputs to make them our GND and Vcc,
-    //which will power the MCP4725
-    pinMode(A2, OUTPUT);
-    pinMode(A3, OUTPUT);
-
-    digitalWrite(A2, LOW);//Set A2 as GND
-    digitalWrite(A3, HIGH);//Set A3 as Vcc
 }
 
 void loop()

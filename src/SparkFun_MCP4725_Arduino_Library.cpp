@@ -72,7 +72,7 @@ sfeTkError_t sfeMcp4725::writeDacEeprom(uint16_t value, MCP4725PowerDownModes po
     return _theI2CBus.writeRegion(bytesToWrite, 3);
 }
 
-sfeTkError_t sfeMcp4725::readDacEeprom(MCP4725Data_t &data){
+sfeTkError_t sfeMcp4725::readDacEeprom(Mcp4725Data &data){
     /*
     Data Returned from Read commands take the form (see datasheet pg. 26):
     
@@ -84,9 +84,14 @@ sfeTkError_t sfeMcp4725::readDacEeprom(MCP4725Data_t &data){
     */
 
     uint8_t readBytes[5];
-    sfeTkError_t rc = _theI2CBus.readRegisterRegion(0, readBytes, 5);
+    size_t nRead = 0;
+    sfeTkError_t rc = _theI2CBus.readRegisterRegion(0, readBytes, 5, nRead);
     if (rc != kSTkErrOk){
         return rc;
+    }
+
+    if (nRead != 5){
+        return kSTkErrFail;
     }
 
     data.rdyFlag = (readBytes[0] & 0x80) >> 7;

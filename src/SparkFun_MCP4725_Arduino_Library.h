@@ -30,7 +30,7 @@ typedef struct {
     uint16_t dacValue;
     MCP4725PowerDownModes eepromPowerDownMode;
     uint16_t eepromValue;
-} MCP4725Data_t;
+} Mcp4725Data;
 
 class sfeMcp4725
 {
@@ -38,7 +38,7 @@ class sfeMcp4725
         //TODO: Is our preference to have general functions like these return bools or sfeTkError codes?
         
         /// @brief Default constructor
-        sfeMcp4725() : _theI2CBus{nullptr} {};
+        sfeMcp4725() {};
 
         /// @brief Checks if device is connected by seeing if it acknowledges over I2C
         /// @return true if connected, false otherwise
@@ -72,7 +72,7 @@ class sfeMcp4725
         /// @param eepromValue 12-bit value read from EEPROM register
         /// @param eepromPowerDownMode Power down mode read from EEPROM register
         /// @return true if successful, false otherwise
-        sfeTkError_t readDacEeprom(MCP4725Data_t &data);
+        sfeTkError_t readDacEeprom(Mcp4725Data &data);
     
     protected:
         sfeTkArdI2C _theI2CBus;
