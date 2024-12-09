@@ -6,7 +6,7 @@
 
   Written by SparkFun Electronics, December, 2024
 
-  This example writes the DAC with three example voltages: 0V, 1.65V, and 3.3V.
+  This example demonstrates how to enter and leave power down mode on the MCP4725 DAC.
 
   https://github.com/sparkfun/SparkFun_MCP4725_Arduino_Library
 
