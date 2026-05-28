@@ -34,13 +34,13 @@ typedef struct
     uint16_t eepromValue;
 } Mcp4725Data;
 
-class sfMCP4725
+class sfDevMCP4725
 {
   public:
     // TODO: Is our preference to have general functions like these return bools or sfeTkError codes?
 
     /// @brief Default constructor
-    sfMCP4725() {};
+    sfDevMCP4725() {};
 
     /// @brief Checks if device is connected by seeing if it acknowledges over I2C
     /// @return true if connected, false otherwise
@@ -74,5 +74,5 @@ class sfMCP4725
     sfeTkError_t readDacEeprom(Mcp4725Data &data);
 
   protected:
-    sfeTkArdI2C _theI2CBus;
+    sfeTkArdI2C *_theBus;
 };

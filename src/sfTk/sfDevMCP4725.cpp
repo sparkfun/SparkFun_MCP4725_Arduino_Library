@@ -17,15 +17,15 @@
 
 #include "sfDevMCP4725.h"
 
-sfeTkError_t sfMCP4725::isConnected()
+sfeTkError_t sfDevMCP4725::isConnected()
 {
-    return _theI2CBus.ping();
+    return _theBus->ping();
 }
 
-sfeTkError_t sfMCP4725::begin(const uint8_t address, TwoWire &wirePort)
+sfeTkError_t sfDevMCP4725::begin(const uint8_t address, TwoWire &wirePort)
 {
     // Setup Arduino I2C bus
-    sfeTkError_t rc = _theI2CBus.init(wirePort, address, true);
+    sfeTkError_t rc = _theBus->init(wirePort, address, true);
 
     if (rc != kSTkErrOk)
         return rc;
@@ -33,8 +33,12 @@ sfeTkError_t sfMCP4725::begin(const uint8_t address, TwoWire &wirePort)
     // Check if device is connected
     return isConnected();
 }
+void sfDevMCP4725::setCommunicationBus(sfTkIBus *theBus)
+{
+    _theBus = theBus;
+}
 
-sfeTkError_t sfMCP4725::writeFastMode(uint16_t value, MCP4725PowerDownModes powerDownMode)
+sfeTkError_t sfDevMCP4725::writeFastMode(uint16_t value, MCP4725PowerDownModes powerDownMode)
 {
     /*
     In Fast mode, writes take the form (see datasheet pg. 24):
@@ -44,10 +48,10 @@ sfeTkError_t sfMCP4725::writeFastMode(uint16_t value, MCP4725PowerDownModes powe
     uint8_t bytesToWrite[2];
     bytesToWrite[0] = (powerDownMode << 4) | ((value & 0x0F00) >> 8);
     bytesToWrite[1] = value & 0x00FF;
-    return _theI2CBus.writeRegion(bytesToWrite, 2);
+    return _theBus->writeRegion(bytesToWrite, 2);
 }
 
-sfeTkError_t sfMCP4725::writeDac(uint16_t value, MCP4725PowerDownModes powerDownMode)
+sfeTkError_t sfDevMCP4725::writeDac(uint16_t value, MCP4725PowerDownModes powerDownMode)
 {
     /*
     Dac writes take the form (see datasheet pg. 25):
@@ -59,10 +63,10 @@ sfeTkError_t sfMCP4725::writeDac(uint16_t value, MCP4725PowerDownModes powerDown
     bytesToWrite[0] = (0x40 | (powerDownMode << 1));
     bytesToWrite[1] = ((value & 0x0FF0) >> 4);
     bytesToWrite[2] = ((value & 0x000F) << 4);
-    return _theI2CBus.writeRegion(bytesToWrite, 3);
+    return _theBus->writeRegion(bytesToWrite, 3);
 }
 
-sfeTkError_t sfMCP4725::writeDacEeprom(uint16_t value, MCP4725PowerDownModes powerDownMode)
+sfeTkError_t sfDevMCP4725::writeDacEeprom(uint16_t value, MCP4725PowerDownModes powerDownMode)
 {
     /*
     Dac writes take the form (see datasheet pg. 25):
@@ -74,10 +78,10 @@ sfeTkError_t sfMCP4725::writeDacEeprom(uint16_t value, MCP4725PowerDownModes pow
     bytesToWrite[0] = (0x60 | (powerDownMode << 1));
     bytesToWrite[1] = ((value & 0x0FF0) >> 4);
     bytesToWrite[2] = ((value & 0x000F) << 4);
-    return _theI2CBus.writeRegion(bytesToWrite, 3);
+    return _theBus->writeRegion(bytesToWrite, 3);
 }
 
-sfeTkError_t sfMCP4725::readDacEeprom(Mcp4725Data &data)
+sfeTkError_t sfDevMCP4725::readDacEeprom(Mcp4725Data &data)
 {
     /*
     Data Returned from Read commands take the form (see datasheet pg. 26):
@@ -91,7 +95,7 @@ sfeTkError_t sfMCP4725::readDacEeprom(Mcp4725Data &data)
 
     uint8_t readBytes[5];
     size_t nRead = 0;
-    sfeTkError_t rc = _theI2CBus.readRegisterRegion(0, readBytes, 5, nRead);
+    sfeTkError_t rc = _theBus->readRegisterRegion(0, readBytes, 5, nRead);
     if (rc != kSTkErrOk)
     {
         return rc;

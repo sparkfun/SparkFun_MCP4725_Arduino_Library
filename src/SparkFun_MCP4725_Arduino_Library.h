@@ -44,7 +44,7 @@
 // clang-format on
 
 /**
- * @class sfMCP4725
+ * @class sfDevMCP4725
  * @brief Arduino I2C implementation for the MCP4725 digtal to analog converter.
  *
  * @details
@@ -52,21 +52,13 @@
  * It inherits from the base driver class and implements the I2C interface using Arduino's Wire library.
  * The class manages device addressing and connection verification.
  *
- * Example usage:
- * @code
- * SfeMCP4725ArdI2C sensor;
- * if (sensor.begin()) {
- *     // Sensor initialized successfully
- * }
- * @endcode
- *
  * @note This class uses the Arduino Wire library for I2C communication
  *
  * @see sfDevTCS3430
  * @see TwoWire
  *
  */
-class SfeMCP4725ArdI2C : public sfMCP4725
+class SfeMCP4725ArdI2C : public sfDevMCP4725
 {
   public:
     SfeMCP4725ArdI2C()
@@ -89,17 +81,8 @@ class SfeMCP4725ArdI2C : public sfMCP4725
      *
      * @return true If initialization successful
      * @return false If any initialization step fails
-     *
-     * Example:
-     * @code
-     * SfeMCP4725ArdI2C sensor;
-     * if (!sensor.begin()) {
-     *     Serial.println("Sensor initialization failed!");
-     *     while (1); // halt
-     * }
-     * @endcode
      */
-    bool begin(const uint8_t &address = kTCS3430Addr, TwoWire &wirePort = Wire)
+    bool begin(const uint8_t &address = MCP4725_DEFAULT_ADDR, TwoWire &wirePort = Wire)
     {
         if (_theI2CBus.init(wirePort, address) != ksfTkErrOk)
             return false;
