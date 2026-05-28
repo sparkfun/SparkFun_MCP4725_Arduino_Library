@@ -54,7 +54,7 @@
  *
  * @note This class uses the Arduino Wire library for I2C communication
  *
- * @see sfDevTCS3430
+ * @see sfDevMCP4725
  * @see TwoWire
  *
  */
@@ -87,60 +87,32 @@ class SfeMCP4725ArdI2C : public sfDevMCP4725
         if (_theI2CBus.init(wirePort, address) != ksfTkErrOk)
             return false;
 
-        setCommunicationBus(&_theI2CBus);
-
-        if (!isConnected())
-            return false;
-
-        sfDevTCS3430::begin(&_theI2CBus);
+        sfDevMCP4725::begin(&_theI2CBus);
 
         return true;
     }
 
     /**
-     * @brief Checks if the TCS3430 sensor is connected and responding.
+     * @brief Checks if the MCP4725 DAC is connected and responding.
      *
      * @details
-     * This method performs two checks:
-     * 1. Attempts to ping the device at the current I2C address
-     * 2. Verifies the device ID matches the expected TCS3430 ID
+     * This method attempts to ping the device at the current I2C address
      *
-     * @return true If device responds to ping and returns correct device ID
-     * @return false If communication fails or device ID is incorrect
-     *
-     * Example:
-     * @code
-     * SfeMCP4725ArdI2C sensor;
-     * if (!sensor.isConnected()) {
-     *     Serial.println("Device not found or incorrect ID!");
-     *     return;
-     * }
-     * @endcode
+     * @return true If device responds to ping and false otherwise.
      */
     bool isConnected(void)
     {
         if (_theI2CBus.ping() != ksfTkErrOk)
             return false;
-
-        // Check the device ID
-        return (kDefaultTCS3430DeviceID == getDeviceID());
     }
 
     /**
-     * @brief Gets the currently configured I2C address of the TCS3430 sensor.
+     * @brief Gets the currently configured I2C address of the MCP4725 DAC.
      *
      * @details
      * Returns the I2C address currently being used to communicate with the sensor.
      *
      * @return uint8_t The current I2C address
-     *
-     * Example:
-     * @code
-     * SfeMCP4725ArdI2C sensor;
-     * uint8_t address = sensor.getDeviceAddress();
-     * Serial.print("Current I2C address: 0x");
-     * Serial.println(address, HEX);
-     * @endcode
      */
     uint8_t getDeviceAddress(void)
     {
@@ -149,7 +121,7 @@ class SfeMCP4725ArdI2C : public sfDevMCP4725
 
   private:
     /**
-     * @brief Arduino I2C bus interface instance for the TCS3430 sensor.
+     * @brief Arduino I2C bus interface instance for the MCP4725 DAC.
      *
      * @details
      * This member handles the low-level I2C communication between the Arduino and the TCS3430 sensor.
