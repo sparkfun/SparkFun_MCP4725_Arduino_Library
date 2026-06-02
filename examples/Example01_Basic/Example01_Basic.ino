@@ -6,7 +6,7 @@
 
   Written by SparkFun Electronics, December, 2024
 
-  This example writes the DAC with three example voltages: 0V, 1.65V, and 3.3V.
+  This example writes the DAC with two example voltages: 0V and 3.3V.
 
   https://github.com/sparkfun/SparkFun_MCP4725_Arduino_Library
 
@@ -23,8 +23,14 @@ SfeMCP4725ArdI2C myDac;
 
 void setup()
 {
-    // Start serial
+    Wire.begin();
+
     Serial.begin(115200);
+
+    // Hang out until the terminal is open.
+    while (!Serial)
+        ;
+
     Serial.println("MCP4725 Example 1 - Basic");
 
     // Start device and I2C
@@ -38,8 +44,8 @@ void setup()
 
 void loop()
 {
-    // This loop will write three different voltages to the DAC with
-    // 2 second delays in between each write, so you can see the voltage
+    // This loop will write two different voltages to the DAC with
+    // 500ms delays in between each write, so you can see the voltage
     // change on the output with a multimeter or oscilloscope.
 
     // The full range of the 12-bit DAC is 0-4095, which corresponds to VSS (Ground) to VDD (3.3V).

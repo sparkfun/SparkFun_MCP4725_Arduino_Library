@@ -35,7 +35,7 @@ void setup()
             ;
     }
 
-    // The MCP4725 has an EEROM that can store a single 12-bit DAC value as well
+    // The MCP4725 has an EEPROM that can store a single 12-bit DAC value as well
     // as two configuration bits for the power down mode. The DAC will output this
     // value on reset or power-cycle.
     Serial.println("Writing 1.65V to DAC");

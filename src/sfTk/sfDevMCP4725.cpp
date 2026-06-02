@@ -22,7 +22,7 @@
 bool sfDevMCP4725::begin(sfTkIBus *theBus)
 {
     // Setup Arduino I2C bus
-    if (!_theBus && !theBus)
+    if (!theBus)
         return false;
 
     if (theBus != nullptr)

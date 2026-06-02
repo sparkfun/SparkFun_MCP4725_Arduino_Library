@@ -83,10 +83,13 @@ class SfeMCP4725ArdI2C : public sfDevMCP4725
      */
     bool begin(const uint8_t &address = MCP4725_ADDRESS, TwoWire &wirePort = Wire)
     {
-        if (_theI2CBus.init(wirePort, address) != ksfTkErrOk)
+        if (_theI2CBus.init(wirePort, address, true) != ksfTkErrOk)
             return false;
 
         sfDevMCP4725::begin(&_theI2CBus);
+
+        if (isConnected() == false)
+            return false;
 
         return true;
     }

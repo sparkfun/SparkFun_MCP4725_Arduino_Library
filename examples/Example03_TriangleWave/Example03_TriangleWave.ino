@@ -81,7 +81,14 @@ void setup()
 
 void loop()
 {
-    // Loop through the sinewave table
-    myDac.writeDac(sintab2[lookup]);
-    lookup = (lookup + 1) & 511;
+    uint32_t counter;
+    // Run through the full 12-bit scale for a triangle wave
+    for (counter = 0; counter < 4095; counter++)
+    {
+        myDac.writeDac(counter);
+    }
+    for (counter = 4095; counter > 0; counter--)
+    {
+        myDac.writeDac(counter);
+    }
 }
