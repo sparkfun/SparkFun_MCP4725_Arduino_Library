@@ -72,5 +72,4 @@ class sfDevMCP4725
 
   protected:
     sfTkIBus *_theBus;
-    const uint8_t kWriteDACEEPROM = 0x40;
 };

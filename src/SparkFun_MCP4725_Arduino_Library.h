@@ -14,12 +14,12 @@
  *
  * @section Class SfeMCP4725ArdI2C Class
  * - begin(): Initializes I2C communication
- * - isConnected(): Verifies sensor connection
+ * - isConnected(): Verifies device connection
  *
  * @section Dependencies Dependencies
  * - Arduino.h
  * - SparkFun_Toolkit.h
- * - sfeTCS3430.h
+ * - sfDevMCP4725.h
  *
  * @author SparkFun Electronics
  * @date 2026
@@ -29,10 +29,9 @@
  * SPDX-License-Identifier: MIT
  *
  * @section Product_Links Product Links
- *  TODO: Update link or remove
- * - Qwiic 1x1: https://www.sparkfun.com/products/
+ * - MCP4725 Breakout: https://www.sparkfun.com/products/12918
  *
- * @see https://github.com/sparkfun/SparkFun_TCS3430_Arduino_Library
+ * @see https://github.com/sparkfun/SparkFun_MCP4725_Arduino_Library
  */
 
 #pragma once
@@ -44,11 +43,11 @@
 // clang-format on
 
 /**
- * @class sfDevMCP4725
- * @brief Arduino I2C implementation for the MCP4725 digtal to analog converter.
+ * @class SfeMCP4725ArdI2C
+ * @brief Arduino I2C implementation for the MCP4725 digital-to-analog converter.
  *
  * @details
- * This class provides Arduino-specific I2C communication implementation for the TCS3430 sensor.
+ * This class provides Arduino-specific I2C communication implementation for the MCP4725 DAC.
  * It inherits from the base driver class and implements the I2C interface using Arduino's Wire library.
  * The class manages device addressing and connection verification.
  *
@@ -66,7 +65,7 @@ class SfeMCP4725ArdI2C : public sfDevMCP4725
     }
 
     /**
-     * @brief Initializes the TCS3430 sensor with I2C communication.
+     * @brief Initializes the MCP4725 DAC with I2C communication.
      *
      * @details
      * This method performs the following initialization steps:
@@ -76,7 +75,7 @@ class SfeMCP4725ArdI2C : public sfDevMCP4725
      * 4. Verifies device connection
      * 5. Calls base class initialization
      *
-     * @param address I2C address of the device (default: kDefaultTCS3430Addr)
+     * @param address I2C address of the device (default: MCP4725_ADDRESS)
      * @param wirePort TwoWire instance to use for I2C communication (default: Wire)
      *
      * @return true If initialization successful
@@ -102,15 +101,14 @@ class SfeMCP4725ArdI2C : public sfDevMCP4725
      */
     bool isConnected(void)
     {
-        if (_theI2CBus.ping() != ksfTkErrOk)
-            return false;
+        return (_theI2CBus.ping() == ksfTkErrOk);
     }
 
     /**
      * @brief Gets the currently configured I2C address of the MCP4725 DAC.
      *
      * @details
-     * Returns the I2C address currently being used to communicate with the sensor.
+     * Returns the I2C address currently being used to communicate with the device.
      *
      * @return uint8_t The current I2C address
      */
@@ -124,7 +122,7 @@ class SfeMCP4725ArdI2C : public sfDevMCP4725
      * @brief Arduino I2C bus interface instance for the MCP4725 DAC.
      *
      * @details
-     * This member handles the low-level I2C communication between the Arduino and the TCS3430 sensor.
+     * This member handles the low-level I2C communication between the Arduino and the MCP4725 DAC.
      *
      * The bus interface is configured during begin() and used by all communication methods.
      *

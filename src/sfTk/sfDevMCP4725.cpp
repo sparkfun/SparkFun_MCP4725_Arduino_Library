@@ -48,7 +48,7 @@ bool sfDevMCP4725::writeFastMode(uint16_t value, MCP4725PowerDownModes powerDown
     bytesToWrite[0] = (powerDownMode << 4) | ((value & 0x0F00) >> 8);
     bytesToWrite[1] = value & 0x00FF;
 
-    if (_theBus->writeRegister(kWriteDACEEPROM, bytesToWrite, length) != ksfTkErrOk)
+    if (_theBus->writeData(bytesToWrite, length) != ksfTkErrOk)
         return false;
 
     return true;
@@ -67,7 +67,7 @@ bool sfDevMCP4725::writeDac(uint16_t value, MCP4725PowerDownModes powerDownMode)
     bytesToWrite[0] = (0x40 | (powerDownMode << 1));
     bytesToWrite[1] = ((value & 0x0FF0) >> 4);
     bytesToWrite[2] = ((value & 0x000F) << 4);
-    if (_theBus->writeRegister(kWriteDACEEPROM, bytesToWrite, length) != ksfTkErrOk)
+    if (_theBus->writeData(bytesToWrite, length) != ksfTkErrOk)
         return false;
 
     return true;
@@ -87,7 +87,7 @@ bool sfDevMCP4725::writeDacEeprom(uint16_t value, MCP4725PowerDownModes powerDow
     bytesToWrite[1] = ((value & 0x0FF0) >> 4);
     bytesToWrite[2] = ((value & 0x000F) << 4);
 
-    if (_theBus->writeRegister(kWriteDACEEPROM, bytesToWrite, length) != ksfTkErrOk)
+    if (_theBus->writeData(bytesToWrite, length) != ksfTkErrOk)
         return false;
 
     return true;
@@ -120,11 +120,13 @@ bool sfDevMCP4725::readDacEeprom(Mcp4725Data &data)
         readBytes[i] = Wire.read();
     }
 
+    Wire.endTransmission();
+
     data.rdyFlag = (readBytes[0] & 0x80) >> 7;
     data.porFlag = (readBytes[0] & 0x40) >> 6;
     data.dacPowerDownMode = static_cast<MCP4725PowerDownModes>((readBytes[0] & 0x06) >> 1);
     data.dacValue = (readBytes[1] << 4) | ((readBytes[2] & 0xF0) >> 4);
-    data.eepromPowerDownMode = static_cast<MCP4725PowerDownModes>((readBytes[3] & 0x60) >> 1);
+    data.eepromPowerDownMode = static_cast<MCP4725PowerDownModes>((readBytes[3] & 0x60) >> 5);
     data.eepromValue = ((readBytes[3] & 0x0F) << 8) | readBytes[4];
 
     return true;
