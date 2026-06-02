@@ -19,7 +19,7 @@
 
 #include "SparkFun_MCP4725_Arduino_Library.h"
 
-sfeMcp4725 myDac;
+SfeMCP4725ArdI2C myDac;
 Mcp4725Data myReadData;
 
 void setup()
@@ -29,9 +29,11 @@ void setup()
     Serial.println("MCP4725 Example 4 - Read");
 
     // Start device and I2C
-    if (myDac.begin() != kSTkErrOk){
+    if (myDac.begin() == false)
+    {
         Serial.println("Device not found. Please check wiring.");
-        while(1);
+        while (1)
+            ;
     }
 
     // Write both the DAC and EEPROM
@@ -46,18 +48,17 @@ void setup()
 
 void loop()
 {
-  // Read the DAC value into our myReadData object
-  myDac.readDacEeprom(myReadData);
+    // Read the DAC value into our myReadData object
+    myDac.readDacEeprom(myReadData);
 
-  // Print to terminal
-  Serial.print("EEPROM Value: ");
-  Serial.println(myReadData.eepromValue);
-  Serial.print("DAC Value: ");
-  Serial.println(myReadData.dacValue);
+    // Print to terminal
+    Serial.print("EEPROM Value: ");
+    Serial.println(myReadData.eepromValue);
+    Serial.print("DAC Value: ");
+    Serial.println(myReadData.dacValue);
 
-  delay(1000); // delay to not overwhelm the serial port 
+    delay(1000); // delay to not overwhelm the serial port
 
-  // Notice, if you unplug and replug the DAC from your controller, the 
-  // EEPROM value will persist, but the DAC value read will reset to the EEPROM value.
-
+    // Notice, if you unplug and replug the DAC from your controller, the
+    // EEPROM value will persist, but the DAC value read will reset to the EEPROM value.
 }

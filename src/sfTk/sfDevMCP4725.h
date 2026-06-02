@@ -6,7 +6,7 @@
 
 // This is the I2C Address of the MCP4725, by default (A0 pulled to GND).
 // Please note that this breakout is for the MCP4725A0.
-#define MCP4725_DEFAULT_ADDR 0x60 // For devices with A0 pulled HIGH, use 0x61
+#define MCP4725_ADDRESS 0x60 // For devices with A0 pulled HIGH, use 0x61
 
 /*
 See datasheet pg. 20:
@@ -39,14 +39,10 @@ class sfDevMCP4725
     /// @brief Default constructor
     sfDevMCP4725() {};
 
-    /// @brief Checks if device is connected by seeing if it acknowledges over I2C
-    /// @return true if connected, false otherwise
-    bool isConnected();
-
     /// @brief Begins the device
     /// @param theBus SparkFun Toolkit bus to use for communication
     /// @return 0 for sccess, negative for errors, positive for warnings
-    bool begin(sftkIBus *theBus = nullptr);
+    bool begin(sfTkIBus *theBus = nullptr);
 
     /// @brief Sets the communication bus to the specified bus.
     /// @param theBus Bus to set as the communication device.
@@ -75,5 +71,6 @@ class sfDevMCP4725
     bool readDacEeprom(Mcp4725Data &data);
 
   protected:
-    sfeTkArdI2C *_theBus;
+    sfTkIBus *_theBus;
+    const uint8_t kWriteDACEEPROM = 0x40;
 };

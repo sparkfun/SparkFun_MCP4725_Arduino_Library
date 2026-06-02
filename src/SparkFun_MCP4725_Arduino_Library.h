@@ -82,7 +82,7 @@ class SfeMCP4725ArdI2C : public sfDevMCP4725
      * @return true If initialization successful
      * @return false If any initialization step fails
      */
-    bool begin(const uint8_t &address = MCP4725_DEFAULT_ADDR, TwoWire &wirePort = Wire)
+    bool begin(const uint8_t &address = MCP4725_ADDRESS, TwoWire &wirePort = Wire)
     {
         if (_theI2CBus.init(wirePort, address) != ksfTkErrOk)
             return false;

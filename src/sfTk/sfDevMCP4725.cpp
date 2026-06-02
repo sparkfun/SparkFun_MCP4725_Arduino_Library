@@ -16,11 +16,8 @@
 */
 
 #include "sfDevMCP4725.h"
-
-bool sfDevMCP4725::isConnected()
-{
-    return _theBus->ping();
-}
+#include <cstddef>
+#include <cstdint>
 
 bool sfDevMCP4725::begin(sfTkIBus *theBus)
 {
@@ -32,7 +29,7 @@ bool sfDevMCP4725::begin(sfTkIBus *theBus)
         setCommunicationBus(theBus);
 
     // Check if device is connected
-    return isConnected();
+    return true;
 }
 void sfDevMCP4725::setCommunicationBus(sfTkIBus *theBus)
 {
@@ -46,11 +43,12 @@ bool sfDevMCP4725::writeFastMode(uint16_t value, MCP4725PowerDownModes powerDown
     byte 0: C2=0 | C0=0 | PD1 | PD0 | D11 | D10 | D9 | D8
     byte 1: D7   | D6   | D5  | D4  | D3  | D2  | D1 | D0
     */
-    uint8_t bytesToWrite[2];
+    size_t length = 2;
+    uint8_t bytesToWrite[length];
     bytesToWrite[0] = (powerDownMode << 4) | ((value & 0x0F00) >> 8);
     bytesToWrite[1] = value & 0x00FF;
 
-    if (_theBus->writeRegion(bytesToWrite, 2) != ktkStkErrOk)
+    if (_theBus->writeRegister(kWriteDACEEPROM, bytesToWrite, length) != ksfTkErrOk)
         return false;
 
     return true;
@@ -64,11 +62,15 @@ bool sfDevMCP4725::writeDac(uint16_t value, MCP4725PowerDownModes powerDownMode)
     byte 1: D11  | D10   | D9   | D8 | D7 | D6  | D5  | D4
     byte 2: D3   | D2    | D1   | D0 | X  | X   | X   | X
     */
-    uint8_t bytesToWrite[3];
+    size_t length = 3;
+    uint8_t bytesToWrite[length];
     bytesToWrite[0] = (0x40 | (powerDownMode << 1));
     bytesToWrite[1] = ((value & 0x0FF0) >> 4);
     bytesToWrite[2] = ((value & 0x000F) << 4);
-    return _theBus->writeRegion(bytesToWrite, 3);
+    if (_theBus->writeRegister(kWriteDACEEPROM, bytesToWrite, length) != ksfTkErrOk)
+        return false;
+
+    return true;
 }
 
 bool sfDevMCP4725::writeDacEeprom(uint16_t value, MCP4725PowerDownModes powerDownMode)
@@ -79,11 +81,16 @@ bool sfDevMCP4725::writeDacEeprom(uint16_t value, MCP4725PowerDownModes powerDow
     byte 1: D11  | D10   | D9   | D8 | D7 | D6  | D5  | D4
     byte 2: D3   | D2    | D1   | D0 | X  | X   | X   | X
     */
-    uint8_t bytesToWrite[3];
+    size_t length = 3;
+    uint8_t bytesToWrite[length];
     bytesToWrite[0] = (0x60 | (powerDownMode << 1));
     bytesToWrite[1] = ((value & 0x0FF0) >> 4);
     bytesToWrite[2] = ((value & 0x000F) << 4);
-    return _theBus->writeRegion(bytesToWrite, 3);
+
+    if (_theBus->writeRegister(kWriteDACEEPROM, bytesToWrite, length) != ksfTkErrOk)
+        return false;
+
+    return true;
 }
 
 bool sfDevMCP4725::readDacEeprom(Mcp4725Data &data)
@@ -98,17 +105,19 @@ bool sfDevMCP4725::readDacEeprom(Mcp4725Data &data)
     byte 4 (EEPROM Reg): D7  | D6  | D5  | D4 | D3  | D2  | D1  | D0
     */
 
-    uint8_t readBytes[5];
-    size_t nRead = 0;
-    bool rc = _theBus->readRegisterRegion(0, readBytes, 5, nRead);
-    if (rc != kSTkErrOk)
-    {
-        return rc;
-    }
+    size_t readLength = 5;
+    uint8_t readBytes[readLength];
+    uint16_t nRead = 0;
 
-    if (nRead != 5)
+    Wire.beginTransmission(MCP4725_ADDRESS);
+    nRead = Wire.requestFrom(MCP4725_ADDRESS, readLength);
+
+    if (nRead == 0)
+        return false;
+
+    for (int i = 0; i < nRead; i++)
     {
-        return kSTkErrFail;
+        readBytes[i] = Wire.read();
     }
 
     data.rdyFlag = (readBytes[0] & 0x80) >> 7;
@@ -118,5 +127,5 @@ bool sfDevMCP4725::readDacEeprom(Mcp4725Data &data)
     data.eepromPowerDownMode = static_cast<MCP4725PowerDownModes>((readBytes[3] & 0x60) >> 1);
     data.eepromValue = ((readBytes[3] & 0x0F) << 8) | readBytes[4];
 
-    return kSTkErrOk;
+    return true;
 }
