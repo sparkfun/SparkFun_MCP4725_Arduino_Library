@@ -65,10 +65,6 @@ void setup()
     // Start serial
     Serial.begin(115200);
 
-    // Hang out until the terminal is open.
-    while (!Serial)
-        ;
-
     Serial.println("MCP4725 Example 2 - Waveform");
 
     if (myDac.begin() == false)
