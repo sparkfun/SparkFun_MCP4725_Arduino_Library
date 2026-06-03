@@ -37,7 +37,9 @@ class sfDevMCP4725
 {
   public:
     /// @brief Default constructor
-    sfDevMCP4725() {};
+    sfDevMCP4725() : _theBus{nullptr}
+    {
+    }
 
     /// @brief Begins the device
     /// @param theBus SparkFun Toolkit bus to use for communication

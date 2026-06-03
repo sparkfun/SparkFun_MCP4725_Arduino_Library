@@ -4,7 +4,7 @@
   Do you like this library? Help support SparkFun. Buy a board!
   https://www.sparkfun.com/products/12918
 
-  Written by SparkFun Electronics, December, 2024
+  Written by SparkFun Electronics, June 2026
 
   https://github.com/sparkfun/SparkFun_MCP4725_Arduino_Library
 
@@ -22,11 +22,10 @@
 bool sfDevMCP4725::begin(sfTkIBus *theBus)
 {
     // Setup Arduino I2C bus
-    if (!theBus)
+    if (theBus == nullptr)
         return false;
 
-    if (theBus != nullptr)
-        setCommunicationBus(theBus);
+    setCommunicationBus(theBus);
 
     // Check if device is connected
     return true;
@@ -107,20 +106,10 @@ bool sfDevMCP4725::readDacEeprom(Mcp4725Data &data)
 
     size_t readLength = 5;
     uint8_t readBytes[readLength];
-    uint16_t nRead = 0;
+    size_t nRead = 0;
 
-    Wire.beginTransmission(MCP4725_ADDRESS);
-    nRead = Wire.requestFrom(MCP4725_ADDRESS, readLength);
-
-    if (nRead == 0)
+    if (_theBus->readRegister(nullptr, 0, readBytes, readLength, nRead) != ksfTkErrOk || nRead == 0)
         return false;
-
-    for (int i = 0; i < nRead; i++)
-    {
-        readBytes[i] = Wire.read();
-    }
-
-    Wire.endTransmission();
 
     data.rdyFlag = (readBytes[0] & 0x80) >> 7;
     data.porFlag = (readBytes[0] & 0x40) >> 6;
