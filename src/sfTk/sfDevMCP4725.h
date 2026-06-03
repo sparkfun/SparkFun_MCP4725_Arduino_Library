@@ -6,7 +6,8 @@
 
 // This is the I2C Address of the MCP4725, by default (A0 pulled to GND).
 // Please note that this breakout is for the MCP4725A0.
-#define MCP4725_ADDRESS 0x60 // For devices with A0 pulled HIGH, use 0x61
+#define MCP4725_DEFAULT_ADDRESS 0x60
+#define MCP4725_ALTERNATE_ADDRESS 0x61 // For devices with A0 pulled HIGH, use 0x61
 
 /*
 See datasheet pg. 20:

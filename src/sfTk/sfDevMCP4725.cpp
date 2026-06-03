@@ -8,9 +8,6 @@
 
   https://github.com/sparkfun/SparkFun_MCP4725_Arduino_Library
 
-  Development environment specifics:
-  Arduino IDE 1.8.13
-
   SparkFun code, firmware, and software is released under the MIT License.
   Please see LICENSE.md for more details.
 */
@@ -108,6 +105,7 @@ bool sfDevMCP4725::readDacEeprom(Mcp4725Data &data)
     uint8_t readBytes[readLength];
     size_t nRead = 0;
 
+    // This device does not have any registers, and returns 6 bytes every time.
     if (_theBus->readRegister(nullptr, 0, readBytes, readLength, nRead) != ksfTkErrOk || nRead == 0)
         return false;
 

@@ -75,13 +75,13 @@ class SfeMCP4725ArdI2C : public sfDevMCP4725
      * 4. Verifies device connection
      * 5. Calls base class initialization
      *
-     * @param address I2C address of the device (default: MCP4725_ADDRESS)
+     * @param address I2C address of the device (default: MCP4725_DEFAULT_ADDRESS)
      * @param wirePort TwoWire instance to use for I2C communication (default: Wire)
      *
      * @return true If initialization successful
      * @return false If any initialization step fails
      */
-    bool begin(const uint8_t &address = MCP4725_ADDRESS, TwoWire &wirePort = Wire)
+    bool begin(const uint8_t &address = MCP4725_DEFAULT_ADDRESS, TwoWire &wirePort = Wire)
     {
         if (_theI2CBus.init(wirePort, address, true) != ksfTkErrOk)
             return false;
