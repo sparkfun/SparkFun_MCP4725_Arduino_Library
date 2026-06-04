@@ -1,21 +1,21 @@
-/*
-  This is an example written for the MCP4725 DAC Breakout
-  SparkFun sells these at its website: www.sparkfun.com
-  Do you like this library? Help support SparkFun. Buy a board!
-  https://www.sparkfun.com/products/12918
-
-  Written by SparkFun Electronics, December, 2024
-
-  This example uses fast mode to write the DAC with three example voltages: 0V, 1.65V, and 3.3V.
-
-  https://github.com/sparkfun/SparkFun_MCP4725_Arduino_Library
-
-  Development environment specifics:
-  Arduino IDE 1.8.13
-
-  SparkFun code, firmware, and software is released under the MIT License.
-  Please see LICENSE.md for more details.
-*/
+/**
+ * @file Example06_FastWrite.ino
+ * @brief Example demonstrates the DAC's "fast write" functionality.
+ *
+ * @author SparkFun Electronics
+ * @date 2026
+ * @copyright Copyright (c) 2026, SparkFun Electronics Inc. All rights reserved.
+ *
+ * @section License License
+ * SPDX-License-Identifier: MIT
+ *
+ * @section Product_Links Product Links
+ * - Qwiic 1x1: https://www.sparkfun.com/sparkfun-qwiic-12-bit-dac-breakout-mcp4725.html
+ * - Breakout: https://www.sparkfun.com/sparkfun-i2c-dac-breakout-mcp4725.html
+ *
+ *
+ * @see https://github.com/sparkfun/SparkFun_MCP4725_Arduino_Library
+ */
 
 #include "SparkFun_MCP4725_Arduino_Library.h"
 

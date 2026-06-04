@@ -1,21 +1,20 @@
-/*
-  This is an example written for the MCP4725 DAC Breakout
-  SparkFun sells these at its website: www.sparkfun.com
-  Do you like this library? Help support SparkFun. Buy a board!
-  https://www.sparkfun.com/products/12918
-
-  Written by SparkFun Electronics, December, 2024
-
-  This example writes the DAC with two example voltages: 0V and 3.3V.
-
-  https://github.com/sparkfun/SparkFun_MCP4725_Arduino_Library
-
-  Development environment specifics:
-  Arduino IDE 1.8.13
-
-  SparkFun code, firmware, and software is released under the MIT License.
-  Please see LICENSE.md for more details.
-*/
+/**
+ * @file Example01_Basic.ino
+ * @brief Example demonstrating how to set voltages using
+ *
+ * @author SparkFun Electronics
+ * @date 2026
+ * @copyright Copyright (c) 2026, SparkFun Electronics Inc. All rights reserved.
+ *
+ * @section License License
+ * SPDX-License-Identifier: MIT
+ *
+ * @section Product_Links Product Links
+ * - Qwiic 1x1: https://www.sparkfun.com/sparkfun-qwiic-12-bit-dac-breakout-mcp4725.html
+ * - Breakout: https://www.sparkfun.com/sparkfun-i2c-dac-breakout-mcp4725.html
+ *
+ * @see https://github.com/sparkfun/SparkFun_MCP4725_Arduino_Library
+ */
 
 #include "SparkFun_MCP4725_Arduino_Library.h"
 
@@ -44,16 +43,19 @@ void setup()
 
 void loop()
 {
-    // This loop will write two different voltages to the DAC with
+    // This loop will write three different voltages to the DAC with
     // 500ms delays in between each write, so you can see the voltage
     // change on the output with a multimeter or oscilloscope.
 
     // The full range of the 12-bit DAC is 0-4095, which corresponds to VSS (Ground) to VDD (3.3V).
     // The equation for output voltage is (see datasheet pg. 19): VDD * (DAC Value / 4096)
-
     Serial.println("Writing 0V to DAC");
     myDac.writeDac(0); // ~0V if VDD = 3.3V
 
+    delay(500);
+
+    Serial.println("Writing 1.6V to DAC");
+    myDac.writeDac(1985); // ~1.6V if VDD = 3.3V
     delay(500);
 
     Serial.println("Writing 3.3V to DAC");
