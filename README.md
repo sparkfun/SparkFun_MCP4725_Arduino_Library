@@ -1,7 +1,7 @@
 SparkFun MCP4725 Arduino Library
 ========================================
 
-![SparkFun Qwiic 12-Bit DAC Breakout - MCP4725](docs/MCP4725.png)
+<p align="center"><img src="docs/MCP4725.png" alt="SparkFun Qwiic 12-Bit DAC Breakout - MCP4725"></p>
 
 The SparkFun MCP4725 Arduino Library provides full control over Microchip's MCP4725, a 12-bit single-channel I2C digital-to-analog converter (DAC). The MCP4725 is compatible with SparkFun's Qwiic connect system, so no soldering is required to get started. An onboard EEPROM allows the device to retain its DAC value and power-down settings across power cycles, making it ideal for applications that require a consistent analog output at startup.
 
