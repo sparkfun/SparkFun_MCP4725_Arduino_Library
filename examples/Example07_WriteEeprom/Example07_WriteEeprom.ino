@@ -1,22 +1,21 @@
-/*
-  This is an example written for the MCP4725 DAC Breakout
-  SparkFun sells these at its website: www.sparkfun.com
-  Do you like this library? Help support SparkFun. Buy a board!
-  https://www.sparkfun.com/products/12918
-
-  Written by SparkFun Electronics, December, 2024
-
-  This example writes the DAC and EEPROM With a single command.
-
-  https://github.com/sparkfun/SparkFun_MCP4725_Arduino_Library
-
-  Development environment specifics:
-  Arduino IDE 1.8.13
-
-  SparkFun code, firmware, and software is released under the MIT License.
-  Please see LICENSE.md for more details.
-*/
-
+/**
+ * @file Example07_WriteEeprom.ino
+ * @brief Example demonstrates how to write to EEPROM.
+ *
+ * @author SparkFun Electronics
+ * @date 2026
+ * @copyright Copyright (c) 2026, SparkFun Electronics Inc. All rights reserved.
+ *
+ * @section License License
+ * SPDX-License-Identifier: MIT
+ *
+ * @section Product_Links Product Links
+ * - Qwiic 1x1: https://www.sparkfun.com/sparkfun-qwiic-12-bit-dac-breakout-mcp4725.html
+ * - Breakout: https://www.sparkfun.com/sparkfun-i2c-dac-breakout-mcp4725.html
+ *
+ *
+ * @see https://github.com/sparkfun/SparkFun_MCP4725_Arduino_Library
+ */
 #include "SparkFun_MCP4725_Arduino_Library.h"
 
 SfeMCP4725ArdI2C myDac;
@@ -25,7 +24,7 @@ void setup()
 {
     // Start serial
     Serial.begin(115200);
-    Serial.println("MCP4725 Example 3 - Write EEPROM");
+    Serial.println("MCP4725 Example 7 - Write EEPROM");
 
     // Start device and I2C
     if (myDac.begin() == false)

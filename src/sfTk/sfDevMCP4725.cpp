@@ -1,17 +1,3 @@
-/*
-  This is a library written for the MCP4725 DAC Breakout
-  SparkFun sells these at its website: www.sparkfun.com
-  Do you like this library? Help support SparkFun. Buy a board!
-  https://www.sparkfun.com/products/12918
-
-  Written by SparkFun Electronics, June 2026
-
-  https://github.com/sparkfun/SparkFun_MCP4725_Arduino_Library
-
-  SparkFun code, firmware, and software is released under the MIT License.
-  Please see LICENSE.md for more details.
-*/
-
 #include "sfDevMCP4725.h"
 #include <cstddef>
 #include <cstdint>
@@ -36,7 +22,7 @@ bool sfDevMCP4725::writeFastMode(uint16_t value, MCP4725PowerDownModes powerDown
 {
     /*
     In Fast mode, writes take the form (see datasheet pg. 24):
-    byte 0: C2=0 | C0=0 | PD1 | PD0 | D11 | D10 | D9 | D8
+    byte 0: C2=0 | C1=0 | PD1 | PD0 | D11 | D10 | D9 | D8
     byte 1: D7   | D6   | D5  | D4  | D3  | D2  | D1 | D0
     */
     size_t length = 2;
@@ -72,7 +58,7 @@ bool sfDevMCP4725::writeDac(uint16_t value, MCP4725PowerDownModes powerDownMode)
 bool sfDevMCP4725::writeDacEeprom(uint16_t value, MCP4725PowerDownModes powerDownMode)
 {
     /*
-    Dac writes take the form (see datasheet pg. 25):
+    DAC and EEPROM writes take the form (see datasheet pg. 25):
     byte 0: C2=0 | C1=1  | C0=1 | X  | X  | PD1 | PD0 | X
     byte 1: D11  | D10   | D9   | D8 | D7 | D6  | D5  | D4
     byte 2: D3   | D2    | D1   | D0 | X  | X   | X   | X
@@ -105,7 +91,7 @@ bool sfDevMCP4725::readDacEeprom(Mcp4725Data &data)
     uint8_t readBytes[readLength];
     size_t nRead = 0;
 
-    // This device does not have any registers, and returns 6 bytes every time.
+    // This device does not have any registers, and returns 5 bytes every time.
     if (_theBus->readRegister(nullptr, 0, readBytes, readLength, nRead) != ksfTkErrOk || nRead == 0)
         return false;
 
