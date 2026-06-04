@@ -1,3 +1,30 @@
+/**
+ * @file sfDevMCP4725.h
+ * @brief Header file for the SparkFun Qwiic DAC - MCP4725
+ *
+ * This file contains the class definitions, constants, and enums for interacting with the MCP4725 DAC.
+ *
+ * @details
+ * sfDevMCP4725 is a comms-agnostic driver for the MCP4725 DAC that uses the SparkFun Toolkit.
+ * The SfeMCP4725ArdI2C class defines the Arduino specific behavior for initializing and interacting with devices.
+ *
+ * @author SparkFun Electronics
+ * @date 2026
+ * @copyright Copyright (c) 2026, SparkFun Electronics Inc. This project is released under the MIT License.
+ *
+ * SPDX-License-Identifier: MIT
+ *
+ * @section Classes Classes
+ * - sfDevMCP4725
+ *
+ * @section Repository Repository
+ * https://github.com/sparkfun/SparkFun_MCP4725_Arduino_Library
+ *
+ * @section Product_Links Product Links
+ * - Qwiic 1x1: https://www.sparkfun.com/sparkfun-qwiic-12-bit-dac-breakout-mcp4725.html
+ * - Breakout: https://www.sparkfun.com/sparkfun-i2c-dac-breakout-mcp4725.html
+ *
+ */
 #pragma once
 
 #include <SparkFun_Toolkit.h>
@@ -44,7 +71,7 @@ class sfDevMCP4725
 
     /// @brief Begins the device
     /// @param theBus SparkFun Toolkit bus to use for communication
-    /// @return 0 for sccess, negative for errors, positive for warnings
+    /// @return 0 for success, negative for errors, positive for warnings
     bool begin(sfTkIBus *theBus = nullptr);
 
     /// @brief Sets the communication bus to the specified bus.
@@ -59,6 +86,7 @@ class sfDevMCP4725
 
     /// @brief Updates DAC register
     /// @param value 12-bit value to write to DAC register
+    /// @param powerDownMode Power down mode to write to DAC register
     /// @return true if successful, false otherwise
     bool writeDac(uint16_t value, MCP4725PowerDownModes powerDownMode = MCP4725_POWER_DOWN_MODE_NORMAL);
 

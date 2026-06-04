@@ -1,6 +1,6 @@
 /**
  * @file Example01_Basic.ino
- * @brief Example demonstrating how to set voltages using
+ * @brief Example demonstrating how to set voltages using the MCP4725 DAC.
  *
  * @author SparkFun Electronics
  * @date 2026
