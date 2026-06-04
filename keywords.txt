@@ -1,29 +1,41 @@
 #########################################################
-# Syntax Coloring Map for TODO: Add name                #
-#########################################################
-# Class
+# Syntax Coloring Map for SparkFun MCP4725 DAC Library  #
 #########################################################
 
-# TODO: Add this
-TemplateClass KEYWORD1
+#########################################################
+# Classes
+#########################################################
+
+SfeMCP4725ArdI2C	KEYWORD1
+sfDevMCP4725	KEYWORD1
+
+#########################################################
+# Data Types
+#########################################################
+
+Mcp4725Data	KEYWORD1
+MCP4725PowerDownModes	KEYWORD1
 
 #########################################################
 # Methods and Functions
 #########################################################
 
-# TODO: Add these
-begin KEYWORD2
+begin	KEYWORD2
+isConnected	KEYWORD2
+getDeviceAddress	KEYWORD2
+setCommunicationBus	KEYWORD2
+writeFastMode	KEYWORD2
+writeDac	KEYWORD2
+writeDacEeprom	KEYWORD2
+readDacEeprom	KEYWORD2
 
 #########################################################
 # Constants
 #########################################################
 
-# TODO: Add these
-TEMPALTE_CONSTANT LITERAL1
-
-#########################################################
-# Structs
-#########################################################
-
-# TODO: Add these
-template_struct_t LITERAL3
+MCP4725_DEFAULT_ADDRESS	LITERAL1
+MCP4725_ALTERNATE_ADDRESS	LITERAL1
+MCP4725_POWER_DOWN_MODE_NORMAL	LITERAL1
+MCP4725_POWER_DOWN_MODE_1K	LITERAL1
+MCP4725_POWER_DOWN_MODE_100K	LITERAL1
+MCP4725_POWER_DOWN_MODE_500K	LITERAL1
