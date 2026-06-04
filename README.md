@@ -1,35 +1,67 @@
-# SparkFun_Template_Arduino_Library
+SparkFun MCP4725 Arduino Library
 ========================================
 
 <table class="table table-hover table-striped table-bordered">
-    <p> TODO: Add product photos and links </p>
+    <tr>
+        <th class="text-center">
+        </th>
+        <th class="text-center">
+        </th>
+    </tr>
+    <tr align="center">
+        <td><a href="https://www.sparkfun.com/sparkfun-qwiic-12-bit-dac-breakout-mcp4725.html"><img src="[TODO: CDN image URL]" alt="SparkFun Qwiic 12-Bit DAC Breakout - MCP4725"></a></td>
+        <td><a href="https://www.sparkfun.com/sparkfun-i2c-dac-breakout-mcp4725.html"><img src="[TODO: CDN image URL]" alt="SparkFun I2C DAC Breakout - MCP4725"></a></td>
+    </tr>
+    <tr align="center">
+        <td>SparkFun Qwiic 12-Bit DAC Breakout - MCP4725 ([TODO: SKU])</td>
+        <td>SparkFun I2C DAC Breakout - MCP4725 ([TODO: SKU])</td>
+    </tr>
 </table>
 
-TODO: Add description of product and library
+The SparkFun MCP4725 Arduino Library provides full control over Microchip's MCP4725, a 12-bit single-channel I2C digital-to-analog converter (DAC). The MCP4725 is compatible with SparkFun's Qwiic connect system, so no soldering is required to get started. An onboard EEPROM allows the device to retain its DAC value and power-down settings across power cycles, making it ideal for applications that require a consistent analog output at startup.
+
+This library is available in the Arduino Library Manager; search for **SparkFun MCP4725**.
+
+This library allows you to:
+
+* Set a 12-bit DAC output value (0–4095)
+* Use fast-mode writes for high-speed waveform generation
+* Persist DAC values and power-down settings to onboard EEPROM
+* Read back the current DAC register and EEPROM contents
+* Configure three power-down modes (1 kΩ, 100 kΩ, and 500 kΩ load to GND)
 
 Repository Contents
 -------------------
 
-* **/documents** - Data sheets, additional product information
-* **/examples** - Example code 
-* **/src** - Source code
+* **/examples** - Example sketches for the library (.ino). Run these from the Arduino IDE.
+* **/src** - Source files for the library (.cpp, .h).
+* **/documents** - Datasheet for the MCP4725.
+* **keywords.txt** - Keywords from this library that will be highlighted in the Arduino IDE.
+* **library.properties** - General library properties for the Arduino package manager.
 
 Documentation
 --------------
-* **[GitHub Repo](https://github.com/sparkfun/TODO)** - TODO: Update URL and description
-* **[Hookup Guide](http://docs.sparkfun.com/TODO/)** - TODO: Update URL and description
+
+* **[Hookup Guide](TODO)** - Hookup guide for the SparkFun MCP4725 breakout boards.
+* **[Installing an Arduino Library Guide](https://learn.sparkfun.com/tutorials/installing-an-arduino-library)** - Basic information on how to install an Arduino library.
+* **[Hardware GitHub Repository - Qwiic 1x1](TODO)** - Main repository (including hardware files) for the SparkFun Qwiic MCP4725 Breakout.
+* **[Hardware GitHub Repository - Breakout](TODO)** - Main repository (including hardware files) for the SparkFun I2C DAC Breakout.
+
+Products That Use This Library
+---------------------------------
+
+* [[TODO: SKU]](https://www.sparkfun.com/sparkfun-qwiic-12-bit-dac-breakout-mcp4725.html) - SparkFun Qwiic 12-Bit DAC Breakout - MCP4725
+* [[TODO: SKU]](https://www.sparkfun.com/sparkfun-i2c-dac-breakout-mcp4725.html) - SparkFun I2C DAC Breakout - MCP4725
 
 License Information
 -------------------
 
-This product is _**open source**_! 
+This product is _**open source**_!
 
-Please review the LICENSE.md file for license information. 
+Please review the LICENSE.md file for license information.
 
-If you have any questions or concerns on licensing, please contact technical support on our [SparkFun forums](https://forum.sparkfun.com/viewforum.php?f=152).
+If you have any questions or concerns on licensing, please contact support@sparkfun.com.
 
 Distributed as-is; no warranty is given.
 
 - Your friends at SparkFun.
-
-_<COLLABORATION CREDIT>_
