@@ -1,6 +1,12 @@
+/*
+ * @author SparkFun Electronics
+ * @date 2026
+ * @copyright Copyright (c) 2026, SparkFun Electronics Inc. This project is released under the MIT License.
+ *
+ * SPDX-License-Identifier: MIT
+ */
 #include "sfDevMCP4725.h"
-#include <cstddef>
-#include <cstdint>
+#include <stddef.h>
 
 bool sfDevMCP4725::begin(sfTkIBus *theBus)
 {
