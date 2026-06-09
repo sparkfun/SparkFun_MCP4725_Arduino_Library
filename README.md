@@ -34,7 +34,7 @@ This library allows you to:
 
 # Documentation
 
-* **[Library Documentation](https://docs.sparkfun.com/SparkFun_MCP4725_Arduino_Library/) - Arduino Library Documentation for the SparkFun MCP4725 breakout boards.
+* **[Library Documentation](https://docs.sparkfun.com/SparkFun_MCP4725_Arduino_Library/)** - Arduino Library Documentation for the SparkFun MCP4725 breakout boards.
 * **[Hookup Guide](https://docs.sparkfun.com/SparkFun_Qwiic_DAC_MCP4725/)** - Hookup guide for the SparkFun MCP4725 breakout boards.
 * **[Installing an Arduino Library Guide](https://learn.sparkfun.com/tutorials/installing-an-arduino-library)** - Basic information on how to install an Arduino library.
 * **[Hardware GitHub Repository - Qwiic 1x1](TODO)** - Main repository (including hardware files) for the SparkFun Qwiic MCP4725 Breakout.
