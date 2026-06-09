@@ -28,7 +28,7 @@
 #pragma once
 
 #include <SparkFun_Toolkit.h>
-#include <cstdint>
+// #include <cstdint>
 #include <stdint.h>
 
 // This is the I2C Address of the MCP4725, by default (A0 pulled to GND).
