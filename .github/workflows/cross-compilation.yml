@@ -102,7 +102,7 @@ jobs:
           # Example of additional libraries needed
           #- name: Simple FOC
           sketch-paths: |
-            - examples/example1_basic
+            - examples/Example1_Basic
           # TODO: Update the path to the sketch, file suffix not needed
           enable-warnings-report: true
           enable-deltas-report: true
